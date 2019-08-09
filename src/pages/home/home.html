@@ -1,17 +1,41 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
+  <ion-toolbar>
+    <ion-title>
+      {{title}}
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+<ion-content>
+
+  <h2 text-center *ngIf="items.length === 0">
+    No items in grocery list...
+  </h2>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of items; let i = index">
+      <ion-item>
+        <h2 slot="start">{{item.name}}</h2>
+        <p slot="end">{{item.quantity}}</p>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button icon-start color="secondary" (click)="shareItem(item, i)">
+          <ion-icon name="share" size="large"></ion-icon>
+        </button>
+        <button ion-button icon-start color="primary" (click)="editItem(item, i)">
+          <ion-icon name="create" size="large"></ion-icon>
+        </button>
+        <button ion-button icon-start color="danger" (click)="removeItem(item._id)">
+          <ion-icon name="trash" size="large"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-fab right bottom>
+    <button ion-fab mini (click)="addItem()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+
 </ion-content>
